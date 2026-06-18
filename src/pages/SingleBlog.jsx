@@ -1,27 +1,32 @@
 import React from 'react'
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import articles from '../data/articles.jsx';
 
 export default function SingleBlog() {
+
   const { id } = useParams();
-  console.log(id.title);
+  const article = articles.find(
+    item => item.id === Number(id)
+  );
+  console.log(id);
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4">
+    <div className="max-w-4xl px-4 py-10 mx-auto">
       {/* Blog Image */}
-      <img src={id.FeaturedImg} alt="Blog Post" className="w-full h-96 object-cover rounded-lg mb-8" />
-      
+      <img src={article.image} alt="Blog Post" className="object-cover w-full mb-8 rounded-lg h-96" />
+
       {/* Blog Title */}
-      <h1 className="text-5xl font-bold mb-4">{id.title}</h1>
-      
+      <h1 className="mb-4 text-5xl font-b old">{article.title}</h1>
+
       {/* Date and Time */}
       <div className="flex items-center gap-4 mb-8 text-gray-600">
-        <span className="text-lg">📅 Posted on: <strong>{id.date}</strong></span>
+        <span className="text-lg">📅 Posted on: <strong>{article.date}</strong></span>
       </div>
-      
+
       {/* Blog Content */}
       <div className="prose prose-lg max-w-none">
-        <p className="text-gray-700 leading-relaxed mb-4">{id.content}</p>
-      </div>      
+        <p className="mb-4 leading-relaxed text-gray-700">{article.content}</p>
+      </div>
     </div>
   )
 }

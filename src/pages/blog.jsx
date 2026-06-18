@@ -1,32 +1,27 @@
 import React from 'react'
 import FeaturedImg from '../assets/featured.jpg';
 import { useNavigate } from 'react-router-dom';
-
+import articles from '../data/articles';
+import { useLocation } from 'react-router-dom';
 const Blog = () => {
-
     const navigate = useNavigate();
-    
-    const articles = [
-        { id: 1, title: 'Blog Post Title 1', date: '2023-01-01', content: 'This is the content of the blog post.' },
-        { id: 2, title: 'Blog Post Title 2', date: '2023-01-02', content: 'This is the content of the blog post.' },
-        { id: 3, title: 'Blog Post Title 3', date: '2023-01-03', content: 'This is the content of the blog post.' }
-    ]
+    const location = useLocation();
 
     return (
-        <div className="blog-container p-10">
-            <h1 className="text-5xl font-bold mb-10">Articles</h1>
+        <div className="p-10 blog-container">
+            <h1 className="mb-10 text-5xl font-bold">Articles</h1>
             {/* boxes */}
-            <div className="flex gap-5 w-full">
-                {articles.map((article) => (
-                    <div key={article.id} className="article flex-1 h-auto">
-                        <div className="wrapper p-5 rounded border border-gray-100 ">
-                            <img src={FeaturedImg} alt={article.title} className="w-full h-60 object-cover rounded mb-3" />
-                            <p className="time">Posted on: <span>{article.date}</span></p>
-                            <h2 className="blog-title">{article.title}</h2>
-                            <p className="content">{article.content}</p>
-                            <button onClick={()=>{
-                                navigate("/SingleBlog.jsx")
-                            }} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Read More</button>
+            <div className="flex w-full gap-5">
+                {articles.map((data) => (
+                    <div key={data.id} className="flex-1 h-auto article">
+                        <div className="p-5 border border-gray-100 rounded wrapper ">
+                            <img src={data.image} alt={data.title} className="object-cover w-full mb-3 rounded h-60" />
+                            <p className="time">Posted on: <span>{data.date}</span></p>
+                            <h2 className="blog-title">{data.title}</h2>
+                            <p className="content">{data.content}</p>
+                            <button onClick={() => {
+                                navigate(`/single-blog/${data.id}`, { state: { from: location } });
+                            }} className="px-4 py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600">Read More</button>
                         </div>
                     </div>
                 ))}
